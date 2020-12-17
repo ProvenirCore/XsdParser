@@ -223,18 +223,20 @@ public abstract class XsdAbstractElement {
         while (child != null) {
             if (child.getNodeType() == Node.ELEMENT_NODE) {
                 String nodeName = child.getNodeName();
+				if (!nodeName.equalsIgnoreCase("xsd:annotation")) {
+					
+					ConfigEntryData configEntryData = XsdParserCore.getParseMappers().get(nodeName);
 
-                ConfigEntryData configEntryData = XsdParserCore.getParseMappers().get(nodeName);
+					if (configEntryData != null && configEntryData.parserFunction != null) {
+						XsdAbstractElement childElement = configEntryData.parserFunction
+								.apply(new ParseData(parser, child, configEntryData.visitorFunction)).getElement();
 
-                if (configEntryData != null && configEntryData.parserFunction != null){
-                    XsdAbstractElement childElement = configEntryData.parserFunction.apply(new ParseData(parser, child, configEntryData.visitorFunction)).getElement();
+						childElement.accept(element.getVisitor());
 
-                    childElement.accept(element.getVisitor());
-
-                    childElement.validateSchemaRules();
-                }
-            }
-
+						childElement.validateSchemaRules();
+					}
+				}
+			}
             child = child.getNextSibling();
         }
 

@@ -295,7 +295,7 @@ class ParserResult{
     private final List<UnsolvedReferenceItem> unsolved;
 
     ParserResult(String fileName){
-        XsdParserCore parser = new XsdParser(fileName);
+        XsdParserCore parser = new XsdParser(fileName, null);
 
         elements = parser.getResultXsdElements().collect(Collectors.toList());
         schemas = parser.getResultXsdSchemas().collect(Collectors.toList());

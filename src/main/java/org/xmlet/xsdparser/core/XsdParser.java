@@ -16,6 +16,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +27,7 @@ import java.util.logging.Logger;
  * after the instance is created.
  */
 public class XsdParser extends XsdParserCore{
-
+HashMap<String,Node> nodesMap=new HashMap<>();
     /**
      * The XsdParser constructor will parse the XSD file with the {@code filepath} and will also parse all the subsequent
      * XSD files with their path present in xsd:import and xsd:include tags. After parsing all the XSD files present it
@@ -34,8 +36,8 @@ public class XsdParser extends XsdParserCore{
      * {@link XsdParser#getResultXsdElements()} and {@link XsdParser#getUnsolvedReferences()}.
      * @param filePath States the path of the XSD file to be parsed.
      */
-    public XsdParser(String filePath){
-        parse(filePath);
+    public XsdParser(String filePath,Map<String,String> fileNameMap){
+        parse(filePath,fileNameMap);
     }
 
     /**
@@ -47,19 +49,19 @@ public class XsdParser extends XsdParserCore{
      * @param filePath States the path of the XSD file to be parsed.
      * @param config Config for the parser.
      */
-    public XsdParser(String filePath, ParserConfig config){
+    public XsdParser(String filePath, ParserConfig config,Map<String,String> fileNameMap){
         super.updateConfig(config);
 
-        parse(filePath);
+        parse(filePath,fileNameMap);
     }
 
-    private void parse(String filePath){
+    private void parse(String filePath,Map<String,String> fileNameMap){
         schemaLocations.add(filePath);
         int index = 0;
 
         while (schemaLocations.size() > index){
             String schemaLocation = schemaLocations.get(index);
-            parseFile(schemaLocation);
+            parseFile(schemaLocation,fileNameMap);
             ++index;
         }
 
@@ -72,14 +74,14 @@ public class XsdParser extends XsdParserCore{
      * field.
      * @param filePath The path to the XSD file.
      */
-    private void parseFile(String filePath) {
+    private void parseFile(String filePath,Map<String,String> fileNameMap) {
         //https://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
 
         try {
             if (!new File(filePath).exists() && isRelativePath(filePath)){
                 String parentFile = schemaLocationsMap.get(filePath);
-
-                filePath  = parentFile.substring(0, parentFile.lastIndexOf('/') + 1).concat(filePath);
+                filePath=filePath.substring(filePath.lastIndexOf("/")+1);
+                filePath  = parentFile.substring(0, parentFile.lastIndexOf('/') + 1).concat(fileNameMap.get(filePath));
 
                 if (!new File(filePath).exists()) {
                     throw new FileNotFoundException(filePath);
@@ -113,7 +115,7 @@ public class XsdParser extends XsdParserCore{
      */
     private Node getSchemaNode(String filePath) throws IOException, SAXException, ParserConfigurationException {
         Document doc = getDocumentBuilder().parse(filePath);
-
+        
         doc.getDocumentElement().normalize();
 
         NodeList nodes = doc.getChildNodes();

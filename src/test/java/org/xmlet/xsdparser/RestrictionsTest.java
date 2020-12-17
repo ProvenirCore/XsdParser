@@ -22,7 +22,7 @@ public class RestrictionsTest {
     private static final XsdParser parser;
 
     static {
-        parser = new XsdParser(getFilePath());
+        parser = new XsdParser(getFilePath(), null);
 
         schemas = parser.getResultXsdSchemas().collect(Collectors.toList());
         elements = parser.getResultXsdElements().collect(Collectors.toList());

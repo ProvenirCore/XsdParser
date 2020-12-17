@@ -239,7 +239,10 @@ public abstract class XsdParserCore {
                     includedFiles.stream().filter(Objects::nonNull).forEach(includedFile ->{
                         String includedFilename = includedFile.substring(includedFile.lastIndexOf("/")+1);
 
-                        includedElements.addAll(parseElements.getOrDefault(includedFile, parseElements.get(parseElements.keySet().stream().filter(k -> k.endsWith(includedFilename)).findFirst().get())));
+                        includedElements.addAll(parseElements.getOrDefault(includedFile, 
+                        		parseElements.get(parseElements.keySet().stream().filter(
+                        				k -> k.contains(includedFilename))
+                        				.findFirst().get())));
                     });
 
                     Map<String, List<NamedConcreteElement>> concreteElementsMap =

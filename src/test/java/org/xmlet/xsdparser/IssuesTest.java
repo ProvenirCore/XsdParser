@@ -20,7 +20,7 @@ public class IssuesTest {
     private static final XsdParser parser;
 
     static {
-        parser = new XsdParser(getFilePath("issues.xsd"));
+        parser = new XsdParser(getFilePath("issues.xsd"), null);
 
         schemas = parser.getResultXsdSchemas().collect(Collectors.toList());
         elements = parser.getResultXsdElements().collect(Collectors.toList());
@@ -131,7 +131,7 @@ public class IssuesTest {
 
     @Test
     public void testIssue23(){
-        XsdParser parser = new XsdParser(getFilePath("issue_23.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_23.xsd"), null);
 
         List<XsdSchema> schemas = parser.getResultXsdSchemas().collect(Collectors.toList());
 
@@ -140,7 +140,7 @@ public class IssuesTest {
 
     @Test
     public void testIssue24(){
-        XsdParser parser = new XsdParser(getFilePath("issue_24.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_24.xsd"), null);
         List<XsdSchema> schemas = parser.getResultXsdSchemas().collect(Collectors.toList());
         for (XsdSchema schema : schemas) {
             List<XsdComplexType> cts = schema.getChildrenComplexTypes().collect(Collectors.toList());
@@ -160,21 +160,21 @@ public class IssuesTest {
 
     @Test
     public void testIssue25ToysBaby(){
-        XsdParser parser = new XsdParser(getFilePath("issue_25_ToysBaby.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_25_ToysBaby.xsd"), null);
 
         testToysBaby(parser);
     }
 
     @Test
     public void testIssue26_Includes(){
-        XsdParser parser = new XsdParser(getFilePath("issue_26_ToysBaby_Includes.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_26_ToysBaby_Includes.xsd"), null);
 
         testToysBaby(parser);
     }
 
     @Test
     public void testIssue26_CustomerTypes(){
-        XsdParser parser = new XsdParser(getFilePath("issue_26_CustomerTypes.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_26_CustomerTypes.xsd"), null);
 
         List<XsdSchema> schemas = parser.getResultXsdSchemas().collect(Collectors.toList());
 
@@ -258,7 +258,7 @@ public class IssuesTest {
 
     @Test
     public void testIssue25AutoAccessory(){
-        XsdParser parser = new XsdParser(getFilePath("issue_25_AutoAccessory.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_25_AutoAccessory.xsd"), null);
 
         XsdSchema amz = parser.getResultXsdSchemas().filter(schema -> schema.getId() == null).findFirst().get();
         Optional<XsdSchema> mainSchemaOptional = parser.getResultXsdSchemas().filter(schema -> schema.getId() != null && schema.getId().equals("main")).findFirst();
@@ -319,7 +319,7 @@ public class IssuesTest {
 
     @Test
     public void testIssue27Attributes(){
-        XsdParser parser = new XsdParser(getFilePath("issue_27_attributes.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_27_attributes.xsd"), null);
 
         List<XsdSchema> schemas = parser.getResultXsdSchemas().collect(Collectors.toList());
 
@@ -358,7 +358,7 @@ public class IssuesTest {
 
     @Test
     public void testIssue27TransitiveIncludes(){
-        XsdParser parser = new XsdParser(getFilePath("issue_27_Includes_A.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_27_Includes_A.xsd"), null);
 
         Optional<XsdSchema> mainSchemaOptional = parser.getResultXsdSchemas().filter(schema -> schema.getId() != null && schema.getId().equals("main")).findFirst();
 
@@ -427,7 +427,7 @@ public class IssuesTest {
 
     @Test
     public void testIssue27TransitiveImports(){
-        XsdParser parser = new XsdParser(getFilePath("issue_27_Import_A.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_27_Import_A.xsd"), null);
 
         Optional<XsdSchema> mainSchemaOptional = parser.getResultXsdSchemas().filter(schema -> schema.getId() != null && schema.getId().equals("main")).findFirst();
 
@@ -496,12 +496,12 @@ public class IssuesTest {
 
     @Test
     public void testIssue28(){
-        XsdParser parser = new XsdParser(getFilePath("issue_28.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_28.xsd"), null);
     }
 
     @Test
     public void testIssue30(){
-        XsdParser parser = new XsdParser(getFilePath("issue_30.xsd"));
+        XsdParser parser = new XsdParser(getFilePath("issue_30.xsd"), null);
 
         Optional<XsdSchema> optionalXsdSchema = parser.getResultXsdSchemas().findFirst();
 

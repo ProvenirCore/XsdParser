@@ -16,7 +16,7 @@ public class NamespaceTest {
     private static final List<XsdSchema> schemas;
 
     static {
-        XsdParser parser = new XsdParser(getFilePath());
+        XsdParser parser = new XsdParser(getFilePath(), null);
         elements = parser.getResultXsdElements().collect(Collectors.toList());
         schemas = parser.getResultXsdSchemas().collect(Collectors.toList());
     }

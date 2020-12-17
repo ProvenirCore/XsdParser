@@ -16,7 +16,7 @@ public class XsdLanguageRestrictionsTest {
      */
     @Test(expected = ParsingException.class)
     public void testLanguageRestriction1(){
-        new XsdParser(HtmlParseTest.class.getClassLoader().getResource("language_restriction_1.xsd").getPath());
+        new XsdParser(HtmlParseTest.class.getClassLoader().getResource("language_restriction_1.xsd").getPath(), null);
     }
 
     /**
@@ -25,7 +25,7 @@ public class XsdLanguageRestrictionsTest {
      */
     @Test(expected = ParsingException.class)
     public void testLanguageRestriction2(){
-        new XsdParser(HtmlParseTest.class.getClassLoader().getResource("language_restriction_2.xsd").getPath());
+        new XsdParser(HtmlParseTest.class.getClassLoader().getResource("language_restriction_2.xsd").getPath(), null);
     }
 
     /**
@@ -34,6 +34,6 @@ public class XsdLanguageRestrictionsTest {
      */
     @Test(expected = ParsingException.class)
     public void testLanguageRestriction3(){
-        new XsdParser(HtmlParseTest.class.getClassLoader().getResource("language_restriction_3.xsd").getPath());
+        new XsdParser(HtmlParseTest.class.getClassLoader().getResource("language_restriction_3.xsd").getPath(), null);
     }
 }
