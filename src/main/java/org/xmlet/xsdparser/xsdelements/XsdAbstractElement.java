@@ -223,7 +223,7 @@ public abstract class XsdAbstractElement {
         while (child != null) {
             if (child.getNodeType() == Node.ELEMENT_NODE) {
                 String nodeName = child.getNodeName();
-				if (!nodeName.equalsIgnoreCase("xsd:annotation")) {
+				if (!nodeName.equalsIgnoreCase("xsd:annotation") && !nodeName.equalsIgnoreCase("xsd:appinfo") ) {
 					
 					ConfigEntryData configEntryData = XsdParserCore.getParseMappers().get(nodeName);
 
